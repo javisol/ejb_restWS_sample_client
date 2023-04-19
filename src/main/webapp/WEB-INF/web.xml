@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         id="stateful-ejb-webapp" version="4.0">
+  <display-name>Stateful EJB Web Application</display-name>
+  <welcome-file-list>
+      <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!--
+  <servlet>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>com.demo.rest.HelloRest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EJBSessionServlet</servlet-name>
+    <servlet-class>org.ratoncio.EjbSessionServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EJBSessionServlet</servlet-name>
+    <url-pattern>/ejb</url-pattern>
+  </servlet-mapping>
+  -->
+
+</web-app>

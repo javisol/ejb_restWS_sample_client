@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jakartaee-8.0</feature>
+        <!--
+        <feature>jsp-2.3</feature>
+        <feature>ejb-3.2</feature>
+        <feature>cdi-2.0</feature>
+        <feature>ejbRemote-3.2</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>jndi-1.0</feature>
+        -->
+        <!-- <feature>replicatedCache-1.0</feature> -->
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                    host="*"
+                    httpPort="9080"
+                    httpsPort="9443" />
+    <!--
+    <replicatedCache id="myCache"
+                    replicationDomain="myDomain"
+                    members="openliberty01, openliberty02"
+                    dataSourceRef="jdbc/postgresql"
+                    />
+    -->
+
+    <dataSource id="postgresql" jndiName="jdbc/postgresql">
+        <jdbcDriver libraryRef="PostgreSQLLib"/>
+        <properties databaseName="openlibertydb" 
+                    serverName="postgresql" 
+                    portNumber="5432" 
+                    user="postgres" 
+                    password="admin"/>
+    </dataSource>
+
+    <library id="PostgreSQLLib">
+        <fileset dir="/home/javi/" includes="postgresql-42.6.0.jar"/>
+    </library>
+
+    <!-- this one is not in server-configuration-overview for openliberty -->
+    <replicationDomain id="openLibertyDomain" 
+                        dataSourceRef="jdbc/postgresql" 
+                        members="openliberty01, openliberty02">
+        <fileStore dir="replicationStore"/>
+    </replicationDomain>
+
+    <ejbContainer replicationDomainRef="myDomain">
+      <session id="EjbSessionRemotePoc" type="Stateful">
+        <jndiName>ejb/EjbSessionRemotePoc</jndiName>
+        <ejbClass>org.ratoncio.EjbSessionPoc</ejbClass>
+      </session>
+    </ejbContainer>
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime --> 
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+
+    <member>
+        <clusterMember hostname="openliberty01" 
+                        httpPort="9080" 
+                        httpsPort="9443" 
+                        userName="admin" 
+                        password="admin" 
+                        weight="1" />
+    </member>
+    <member>
+        <clusterMember hostname="openliberty02" 
+                        httpPort="9080" 
+                        httpsPort="9443" 
+                        userName="admin" 
+                        password="admin" 
+                        weight="2" />
+    </member>
+    <!-- apparently is needed for remoteEJB-3.2 -->
+    <basicRegistry id="basic" realm="dummyRealm">
+    </basicRegistry>
+
+</server>
+
