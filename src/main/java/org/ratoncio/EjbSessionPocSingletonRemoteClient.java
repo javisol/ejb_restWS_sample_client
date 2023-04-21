@@ -11,16 +11,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.ratoncio.stateful.EjbSessionPocRemote;
 
-@WebServlet(urlPatterns = "/client")
-public class EjbSessionPocRemoteClient extends HttpServlet{
+import org.ratoncio.singleton.EjbSessionPocSingletonRemote;
+
+@WebServlet(urlPatterns = "/singleton")
+public class EjbSessionPocSingletonRemoteClient extends HttpServlet{
    private static final long serialVersionUID = 1L;
 
-   private EjbSessionPocRemote bean;
+   private EjbSessionPocSingletonRemote bean;
    private Context ctx;
 
-   public EjbSessionPocRemoteClient(){
+   public EjbSessionPocSingletonRemoteClient(){
     super();
     try {
         Properties p = new Properties();
@@ -39,16 +40,16 @@ public class EjbSessionPocRemoteClient extends HttpServlet{
         //crear contexto
         ctx = new InitialContext(p);
         String jndi;
-        jndi = "org.ratoncio.stateful.EjbSessionPocRemote";
-        jndi = "ejb/ejb-app/ejb-app.war/EjbBean#org.ratoncio.stateful.EjbSessionPocRemote";
-        jndi = "java:global/ejb-app/EjbBean!org.ratoncio.stateful.EjbSessionPocRemote";
+        jndi = "org.ratoncio.singleton.EjbSessionPocSingletonRemote";
+        jndi = "ejb/ejb-app/ejb-app.war/EjbSingletonBean#org.ratoncio.singleton.EjbSessionPocSingletonRemote";
+        jndi = "java:global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSessionPocSingletonRemote";
         /*
         jndi = "corbaname:rir:#ejb/global/ejb-app/EjbBean!org\\.ratoncio\\.EjbSessionPocRemote";
         jndi = "corbaname::openliberty01:2809/NameService#ejb/global/ejb-app/EjbBean!org\\.ratoncio\\.EjbSessionPocRemote";
         jndi = "corbaname::openliberty01:2809/NameService#ejb/global/ejb-app/EjbBean!org%5c.ratoncio%5c.EjbSessionPocRemote";
         */
         System.out.println("[JNDI]: " + jndi);
-        bean = (EjbSessionPocRemote) ctx.lookup(jndi);
+        bean = (EjbSessionPocSingletonRemote) ctx.lookup(jndi);
     }
     catch(Exception e){
         e.printStackTrace();

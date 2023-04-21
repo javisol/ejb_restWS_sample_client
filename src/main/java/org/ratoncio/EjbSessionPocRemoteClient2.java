@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.ratoncio.stateful.EjbSessionPocRemote;
 
 @WebServlet(urlPatterns = "/client2")
 public class EjbSessionPocRemoteClient2 extends HttpServlet{
@@ -25,7 +26,7 @@ public class EjbSessionPocRemoteClient2 extends HttpServlet{
         Properties p = new Properties();
         //p.put(Context.PROVIDER_URL, "corbaloc::127.0.0.1:2809");
         //p.put(Context.PROVIDER_URL, "corbaloc::127.0.0.1:2809/NameService");
-        p.put(Context.PROVIDER_URL, "corbaloc::openliberty01:2809/NameService");
+        p.put(Context.PROVIDER_URL, "corbaloc:iiop:openliberty01:2809/NameService");
         /*
         if (context exist){
             ctx = busco
@@ -36,9 +37,17 @@ public class EjbSessionPocRemoteClient2 extends HttpServlet{
 
         //crear contexto
         ctx = new InitialContext(p);
-        //bean = (EjbSessionPocRemote) ctx.lookup("org.ratoncio.EjbSessionPocRemote");
-        //bean = (EjbSessionPocRemote) ctx.lookup("ejb/ejb-app/ejb-app.war/EjbBean#org.ratoncio.EjbSessionPocRemote");
-        bean = (EjbSessionPocRemote) ctx.lookup("java:global/ejb-app/EjbBean!org.ratoncio.EjbSessionPocRemote");
+        String jndi;
+        jndi = "org.ratoncio.stateful.EjbSessionPocRemote";
+        jndi = "ejb/ejb-app/ejb-app.war/EjbBean#org.ratoncio.stateful.EjbSessionPocRemote";
+        jndi = "java:global/ejb-app/EjbBean!org.ratoncio.stateful.EjbSessionPocRemote";
+        /*
+        jndi = "corbaname:rir:#ejb/global/ejb-app/EjbBean!org\\.ratoncio\\.EjbSessionPocRemote";
+        jndi = "corbaname::openliberty01:2809/NameService#ejb/global/ejb-app/EjbBean!org\\.ratoncio\\.EjbSessionPocRemote";
+        jndi = "corbaname::openliberty01:2809/NameService#ejb/global/ejb-app/EjbBean!org%5c.ratoncio%5c.EjbSessionPocRemote";
+        */
+        System.out.println("[JNDI]: " + jndi);
+        bean = (EjbSessionPocRemote) ctx.lookup(jndi);
     }
     catch(Exception e){
         e.printStackTrace();

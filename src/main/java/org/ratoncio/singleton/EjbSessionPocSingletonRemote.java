@@ -1,10 +1,10 @@
-package org.ratoncio;
+package org.ratoncio.singleton;
 
 import javax.ejb.Remote;
 import java.sql.SQLException;
 
 @Remote
-public interface EjbSessionPocRemote {
+public interface EjbSessionPocSingletonRemote {
 	public void increment(int num);
 	
 	public int result();
