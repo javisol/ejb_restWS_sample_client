@@ -1,4 +1,4 @@
-package org.ratoncio.singleton;
+package org.ratoncio.interfaces.singleton;
 
 import javax.ejb.Remote;
 import java.sql.SQLException;

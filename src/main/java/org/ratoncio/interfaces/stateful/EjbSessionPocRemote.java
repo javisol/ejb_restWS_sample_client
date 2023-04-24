@@ -1,4 +1,4 @@
-package org.ratoncio.stateful;
+package org.ratoncio.interfaces.stateful;
 
 import javax.ejb.Remote;
 import java.sql.SQLException;
