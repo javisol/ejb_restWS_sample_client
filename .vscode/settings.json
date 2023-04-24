@@ -4,5 +4,9 @@
     "files.autoSave": "afterDelay",
     "java.semanticHighlighting.enabled": true,
     "java.jdt.ls.vmargs": "",
-    "java.import.gradle.jvmArguments": ""
+    "java.import.gradle.jvmArguments": "",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/mnt/c/GCMS/ejb_restWS_sample_client/referenced_libraries/ejbRemotePortable.jar"
+    ]
 }
