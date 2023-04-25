@@ -27,6 +27,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>openliberty</groupId>
+            <artifactId>ejbRemotePortable</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -46,4 +51,12 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>in_project_openliberty_jar_repo</id>
+            <name>openliberty jar repo</name>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
+    </repositories>
 </project>

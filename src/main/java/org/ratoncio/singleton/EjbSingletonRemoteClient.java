@@ -5,31 +5,30 @@ import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.rmi.PortableRemoteObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ratoncio.interfaces.singleton.EjbSessionPocSingletonRemote;
+import org.ratoncio.interfaces.singleton.EjbSingletonRemote;
 
-import javax.rmi.PortableRemoteObject;
-
-@WebServlet(urlPatterns = "/singleton3")
-public class EjbSessionPocSingletonRemoteClient3 extends HttpServlet{
+@WebServlet(urlPatterns = "/singleton")
+public class EjbSingletonRemoteClient extends HttpServlet{
    private static final long serialVersionUID = 1L;
 
-   private EjbSessionPocSingletonRemote bean;
+   private EjbSingletonRemote bean;
    private Object remoteObject;
 
-   public EjbSessionPocSingletonRemoteClient3(){
+   public EjbSingletonRemoteClient(){
     super();
     try {
         Properties p = new Properties();
         
         p.put(Context.PROVIDER_URL, "corbaloc:iiop:192.168.0.190:2809/NameService");
         //context creation
-        InitialContext initialContext = new InitialContext();
+        InitialContext initialContext = new InitialContext(p);
         System.out.println("[initialContext]: " + initialContext.toString());
         Context remoteContext = (Context)initialContext.lookup("corbaname::192.168.0.190:2809/NameService");
         System.out.println("[remoteContext]: " + initialContext.toString());
@@ -43,7 +42,7 @@ public class EjbSessionPocSingletonRemoteClient3 extends HttpServlet{
 
         System.out.println("[JNDI]: " + jndi);
         remoteObject = remoteContext.lookup(jndi);
-        bean = (EjbSessionPocSingletonRemote) PortableRemoteObject.narrow(remoteObject, org.ratoncio.interfaces.singleton.EjbSessionPocSingletonRemote.class);
+        bean = (EjbSingletonRemote) PortableRemoteObject.narrow(remoteObject, org.ratoncio.interfaces.singleton.EjbSingletonRemote.class);
         System.out.println("[remote object]: " + remoteObject.toString());
 
     }
@@ -64,8 +63,8 @@ public class EjbSessionPocSingletonRemoteClient3 extends HttpServlet{
             response.getWriter().write("\nCLIENT: "); 
             response.getWriter().write("\n");
 
-            response.getWriter().write("\nremote object: " + remoteObject.toString());
-            response.getWriter().write(remoteObject.getClass().toString());
+            //response.getWriter().write("\nremote object: " + remoteObject.toString());
+            //response.getWriter().write(remoteObject.getClass().toString());
             bean.increment(3);
             response.getWriter().write("\nbean value : " + bean.result());
 
