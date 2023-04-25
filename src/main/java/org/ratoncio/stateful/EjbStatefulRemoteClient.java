@@ -34,9 +34,9 @@ public class EjbStatefulRemoteClient extends HttpServlet{
         System.out.println("[remoteContext]: " + initialContext.toString());
 
         String jndi;
-        jndi = "org.ratoncio.stateful.EjbSessionPocRemote";
-        jndi = "ejb/ejb-app/ejb-app.war/EjbBean#org.ratoncio.stateful.EjbSessionPocRemote";
-        jndi = "java:global/ejb-app/EjbBean!org.ratoncio.stateful.EjbSessionPocRemote";
+        jndi = "org.ratoncio.stateful.EjbStatefulRemote";
+        jndi = "ejb/ejb-app/ejb-app.war/EjbStatefulBean#org.ratoncio.stateful.EjbStatefulRemote";
+        jndi = "java:global/ejb-app/EjbStatefulBean!org.ratoncio.stateful.EjbStatefulRemote";
 
         System.out.println("[JNDI]: " + jndi);
         remoteObject = remoteContext.lookup(jndi);

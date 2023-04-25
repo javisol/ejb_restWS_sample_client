@@ -35,10 +35,10 @@ public class EjbSingletonRemoteClient extends HttpServlet{
 
 
         String jndi;
-        jndi = "org.ratoncio.singleton.EjbSessionPocSingletonRemote";
-        jndi = "ejb/ejb-app/ejb-app.war/EjbSingletonBean#org.ratoncio.singleton.EjbSessionPocSingletonRemote";
-        jndi = "java:global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSessionPocSingletonRemote";
-        jndi = "ejb/global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSessionPocSingletonRemote";
+        jndi = "org.ratoncio.singleton.EjbSingletonRemote";
+        jndi = "ejb/ejb-app/ejb-app.war/EjbSingletonBean#org.ratoncio.singleton.EjbSingletonRemote";
+        jndi = "java:global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSingletonRemote";
+        jndi = "ejb/global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSingletonRemote";
 
         System.out.println("[JNDI]: " + jndi);
         remoteObject = remoteContext.lookup(jndi);
