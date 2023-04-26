@@ -1,7 +1,6 @@
 package org.ratoncio.singleton;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,48 +15,21 @@ import org.ratoncio.interfaces.singleton.EjbSingletonRemote;
 
 @WebServlet(urlPatterns = "/singleton2")
 public class EjbSingletonRemoteClient2 extends HttpServlet{
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-   private EjbSingletonRemote bean;
-   private Object remoteObject;
+    private EjbSingletonRemote bean;
+    private Object remoteObject;
 
-   public EjbSingletonRemoteClient2(){
-    super();
-    try {
-        Properties p = new Properties();
-        
-        p.put(Context.PROVIDER_URL, "corbaloc:iiop:192.168.0.190:2809/NameService");
-        //context creation
-        InitialContext initialContext = new InitialContext();
-        System.out.println("[initialContext]: " + initialContext.toString());
-        Context remoteContext = (Context)initialContext.lookup("corbaname::192.168.0.190:2809/NameService");
-        System.out.println("[remoteContext]: " + initialContext.toString());
-
-
-        String jndi;
-        jndi = "org.ratoncio.singleton.EjbSingletonRemote";
-        jndi = "ejb/ejb-app/ejb-app.war/EjbSingletonBean#org.ratoncio.singleton.EjbSingletonRemote";
-        jndi = "java:global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSingletonRemote";
-        jndi = "ejb/global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSingletonRemote";
-
-        System.out.println("[JNDI]: " + jndi);
-        remoteObject = remoteContext.lookup(jndi);
-        bean = (EjbSingletonRemote) PortableRemoteObject.narrow(remoteObject, org.ratoncio.interfaces.singleton.EjbSingletonRemote.class);
-        System.out.println("[remote object]: " + remoteObject.toString());
-
+    public EjbSingletonRemoteClient2(){
+        super();
     }
-    catch(Exception e){
-        e.printStackTrace();
-    }
- 
 
-   }
-
-   @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
             System.out.println("[doGet]:");
+            getBean();
             response.setContentType("text/plain");
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("\nCLIENT: "); 
@@ -75,6 +47,25 @@ public class EjbSingletonRemoteClient2 extends HttpServlet{
             e.printStackTrace();
         }
    }
-   
+
+    private void getBean(){
+        try {
+            InitialContext initialContext = new InitialContext();
+            System.out.println("[initialContext]: " + initialContext.toString());
+            Context remoteContext = (Context)initialContext.lookup("corbaname::192.168.0.190:2809/NameService");
+            System.out.println("[remoteContext]: " + initialContext.toString());
+
+            String jndi;
+            jndi = "ejb/global/ejb-app/EjbSingletonBean!org.ratoncio.singleton.EjbSingletonRemote";
+
+            System.out.println("[JNDI]: " + jndi);
+            remoteObject = remoteContext.lookup(jndi);
+            System.out.println("[remote object]: " + remoteObject.toString());
+            bean = (EjbSingletonRemote) PortableRemoteObject.narrow(remoteObject, org.ratoncio.interfaces.singleton.EjbSingletonRemote.class);
+            System.out.println("[bean]: " + bean.toString());
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
 }
