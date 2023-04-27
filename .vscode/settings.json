@@ -8,5 +8,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/mnt/c/GCMS/ejb_restWS_sample_client/referenced_libraries/ejbRemotePortable.jar"
-    ]
+    ],
+    "xml.java.home": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
