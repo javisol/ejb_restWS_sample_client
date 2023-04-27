@@ -35,7 +35,7 @@
     <applicationManager autoExpand="true"/>
 
     <!-- Configures the application on a specified context root -->
-    <webApplication contextRoot="/app-name" location="app-name.war" />
+    <webApplication contextRoot="/ejb-appclient" location="ejb-appclient.war" />
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
