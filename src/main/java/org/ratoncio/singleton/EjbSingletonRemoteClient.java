@@ -25,12 +25,13 @@ public class EjbSingletonRemoteClient extends HttpServlet{
     super();
     try {
         Properties p = new Properties();
-        
-        p.put(Context.PROVIDER_URL, "corbaloc:iiop:192.168.0.190:2809/NameService");
+        p.load(this.getClass().getResourceAsStream("/org/ratoncio/conf/client.properties"));
+        //p.put(Context.PROVIDER_URL, "corbaloc:iiop:192.168.0.190:2809/NameService");
         //context creation
         InitialContext initialContext = new InitialContext(p);
         System.out.println("[initialContext]: " + initialContext.toString());
-        Context remoteContext = (Context)initialContext.lookup("corbaname::192.168.0.190:2809/NameService");
+        //Context remoteContext = (Context)initialContext.lookup("corbaname::192.168.0.190:2809/NameService");
+        Context remoteContext = (Context)initialContext.lookup(p.getProperty("Context.PROVIDER_URL"));
         System.out.println("[remoteContext]: " + initialContext.toString());
 
 
